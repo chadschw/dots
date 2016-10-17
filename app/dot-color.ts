@@ -23,6 +23,10 @@ export class DotColor {
         return color;
     }
 
+    static CreateDotColor(r: number, g: number, b: number) {
+        return new DotColor(r, g, b, 255);
+    }
+
     SetFillColor(context: CanvasRenderingContext2D) {
         context.fillStyle = this.rgbString;
     }

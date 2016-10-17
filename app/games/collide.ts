@@ -1,7 +1,7 @@
 
-import { GameOptions } from './game-options';
-import { Game } from './game';
-import { Dot } from './dot';
+import { GameOptions } from '../game-options';
+import { Game } from '../game';
+import { Dot } from '../dot';
 
 export class Collide extends Game {
 
