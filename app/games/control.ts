@@ -18,7 +18,10 @@ export class Control extends Game {
 
     Reset(): void {
         this.CreateDots();
-        this.InitControlledDot();
+        this.player1 = this.dots[0];
+        this.player2 = this.dots[1];
+        this.InitPlayerDot(this.player1, DotColor.CreateDotColor(0,0,0));
+        this.InitPlayerDot(this.player2, DotColor.CreateDotColor(255,0,0));
     }
 
     CreateDots() {
@@ -40,13 +43,9 @@ export class Control extends Game {
         }
     }
 
-    InitControlledDot() {
-        this.controlledDot = this.dots[0];
-
-        this.controlledDot.radius = 25;
-        this.controlledDot.color = DotColor.CreateDotColor(0,0,0);
-        this.controlledDot.gx = 0;
-        this.controlledDot.gy = 0;
+    InitPlayerDot(playerDot: Dot, dotColor: DotColor) {
+        playerDot.radius = 25;
+        playerDot.color = dotColor;
     }
 
     OptionsUpdated() {
@@ -57,25 +56,42 @@ export class Control extends Game {
     }
 
     Loop(context: CanvasRenderingContext2D) {
-        this.ApplyInputsToControlledDot();
+        this.ApplyInputsToPlayerDots();
         this.StepDots();
         this.CollideDots();
         this.Draw(context);
     }
 
-    private ApplyInputsToControlledDot() {
+    private ApplyInputsToPlayerDots() {
+
+        this.ApplyInputsToDot(
+            this.player1,
+            KeyCodes.w,
+            KeyCodes.s,
+            KeyCodes.a,
+            KeyCodes.d);
+
+        this.ApplyInputsToDot(
+            this.player2,
+            KeyCodes.up,
+            KeyCodes.down,
+            KeyCodes.left,
+            KeyCodes.right);
+    }
+
+    private ApplyInputsToDot(dot: Dot, up: number, down: number, left: number, right: number) {
         var velocityAdjust = 1;
-        if (this.Options.IsKeyDown(KeyCodes.w)) {
-            this.controlledDot.vy -= velocityAdjust;
+        if (this.Options.IsKeyDown(up)) {
+            dot.vy -= velocityAdjust;
         }
-        if (this.Options.IsKeyDown(KeyCodes.s)) {
-            this.controlledDot.vy += velocityAdjust;
+        if (this.Options.IsKeyDown(down)) {
+            dot.vy += velocityAdjust;
         }
-        if (this.Options.IsKeyDown(KeyCodes.a)) {
-            this.controlledDot.vx -= 5;
+        if (this.Options.IsKeyDown(left)) {
+            dot.vx -= velocityAdjust;
         }
-        if (this.Options.IsKeyDown(KeyCodes.d)) {
-            this.controlledDot.vx += 5;
+        if (this.Options.IsKeyDown(right)) {
+            dot.vx += velocityAdjust;
         }
     }
 
@@ -93,7 +109,22 @@ export class Control extends Game {
             for (var j = i+1; j < this.dots.length; j++) {
                 var dotB = this.dots[j];
                 
-                dotA.Collide(dotB);
+                if (dotA.Collide(dotB)) {
+                    if (dotA === this.player1 && dotB === this.player2) 
+                    {
+                        if (this.player1.radius > this.player2.radius) {
+                            this.dots.splice(j,1);
+                        } else {
+                            this.dots.splice(i,1);
+                        }
+                    } else if (dotA === this.player1) {
+                        this.player1.radius += 0.1;
+                        this.dots.splice(j, 1);
+                    } else if (dotA === this.player2) {
+                        this.player2.radius += 0.1;
+                        this.dots.splice(j, 1);
+                    }
+                }
             }
         }
     }
@@ -103,8 +134,6 @@ export class Control extends Game {
         this.dots.forEach(dot => {
             dot.Draw(context);
         });
-
-        this.controlledDot.Draw(context);
     }
 
     private FillBackground(context: CanvasRenderingContext2D) {
@@ -113,5 +142,6 @@ export class Control extends Game {
     }
 
     private dots: Dot[] = [];
-    private controlledDot: Dot;
+    private player1: Dot;
+    private player2: Dot;
 }

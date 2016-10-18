@@ -82,13 +82,15 @@ export class Dot {
         this.vy += this.gy;
     }
 
-    Collide(otherDot: Dot) {
+    Collide(otherDot: Dot): boolean {
+        var collide = false;
         var dx = otherDot.x - this.x;
         var dy = otherDot.y - this.y;
         var distance = Math.sqrt(dx * dx + dy * dy);
         var minDistance = otherDot.radius + this.radius;
 
         if (distance < minDistance) {
+            collide = true;
             var tx = this.x + dx / distance * minDistance;
             var ty = this.y + dy / distance * minDistance;
             var ax = (tx - otherDot.x) * 0.9;
@@ -105,6 +107,8 @@ export class Dot {
             otherDot.vx *= this.friction * 0.9;
             otherDot.vy *= this.friction * 0.9;
         }
+
+        return collide;
     }
 
     Draw(context: CanvasRenderingContext2D) {
