@@ -1,4 +1,4 @@
-import { Coord } from './coord';
+import { Coord } from '../util/coord';
 
 export class GameOptions {
 

@@ -1,11 +1,11 @@
 
-import { Coord } from '../coord';
-import { GameOptions } from '../game-options';
-import { Game } from '../game';
-import { Dot } from '../dot';
-import { DotColor } from '../dot-color';
-import { MathUtil } from '../math';
-import { KeyCodes } from '../key-codes';
+import { Coord } from '../util/coord';
+import { GameOptions } from '../game/game-options';
+import { Game } from '../game/game';
+import { Dot } from '../dot/dot';
+import { DotColor } from '../dot/dot-color';
+import { MathUtil } from '../util/math';
+import { KeyCodes } from '../game/key-codes';
 
 export class Gravity extends Game {
 

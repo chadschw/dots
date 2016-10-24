@@ -1,4 +1,4 @@
-import { MathUtil } from './math';
+import { MathUtil } from '../util/math';
 
 export class DotColor {
 
