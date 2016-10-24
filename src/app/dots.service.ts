@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { GameOptions } from './game-options';
-import { Game } from './game';
+import { GameOptions } from './game/game-options';
+import { Game } from './game/game';
 import { Collide } from './games/collide';
 import { Control } from './games/control';
 import { Gravity } from './games/gravity';

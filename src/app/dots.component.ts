@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DotsService } from './dots.service';
-import { GameOptions } from './game-options';
-import { KeyCodes } from './key-codes';
+import { GameOptions } from './game/game-options';
+import { KeyCodes } from './game/key-codes';
 
 @Component({
     selector: 'dots',

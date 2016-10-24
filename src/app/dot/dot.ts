@@ -1,6 +1,6 @@
 
-import { MathUtil } from './math';
-import { DotColor } from './dot-color';
+import { MathUtil } from '../util/math';
+import { DotColor } from '../dot/dot-color';
 
 export class Dot {
     constructor(
