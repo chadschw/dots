@@ -2,19 +2,28 @@ import { MathUtil } from '../util/math';
 
 export class DotColor {
 
+    get alpha(): number {
+      return this._alpha;
+    }
+
+    set alpha(newAlpha: number) {
+      this._alpha = newAlpha;
+      this.CreateRgbaString();
+    }
+
     constructor(
         public r: number = 0,
         public g: number = 0,
         public b: number = 0,
-        public alpha: number = 255) {
-            this.CreateRgbString();
+        private _alpha: number = 1.0) {
+            this.CreateRgbaString();
         }
 
     Randomize() {
         this.r = MathUtil.RandBetweenInt(0, 255);
         this.g = MathUtil.RandBetweenInt(0, 255);
         this.b = MathUtil.RandBetweenInt(0, 255);
-        this.CreateRgbString();
+        this.CreateRgbaString();
     }
 
     static CreateRandomColor(): DotColor {
@@ -28,12 +37,16 @@ export class DotColor {
     }
 
     SetFillColor(context: CanvasRenderingContext2D) {
-        context.fillStyle = this.rgbString;
+        context.fillStyle = this.rgbaString;
     }
 
-    CreateRgbString() {
-        this.rgbString = "rgb(" + this.r + "," + this.g + "," + this.b + ")";
+    CreateRgbaString() {
+        this.rgbaString =
+          "rgba(" + this.r + "," +
+                    this.g + "," +
+                    this.b + "," +
+                    this.alpha + ")";
     }
 
-    private rgbString: string;
+    private rgbaString: string;
 }
