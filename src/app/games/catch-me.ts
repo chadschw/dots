@@ -62,8 +62,11 @@ export class CatchMe extends Game {
     this.ApplyInputsToPlayerDot(this.p1, KeyCodes.w, KeyCodes.a, KeyCodes.s, KeyCodes.d);
     this.ApplyInputsToPlayerDot(this.p2, KeyCodes.up, KeyCodes.left, KeyCodes.down, KeyCodes.right);
     this.StepDots();
-    this.CollideDots();
+    this.CollideDots(this.dots);
     this.Draw(context);
+
+    this.StepFragments();
+    this.DrawFragments(context);
   }
 
   private ApplyInputsToPlayerDot(dot: Dot, up: number, left: number, down: number, right: number) {
@@ -88,13 +91,13 @@ export class CatchMe extends Game {
     });
   }
 
-  private CollideDots() {
+  private CollideDots(dots: Dot[]) {
     // Collide each dot with every other dot exactly once.
     for (var i = 0; i < this.dots.length; i++) {
-      var dotA = this.dots[i];
+      var dotA = dots[i];
 
       for (var j = i+1; j < this.dots.length; j++) {
-        var dotB = this.dots[j];
+        var dotB = dots[j];
 
         if (dotA.Collide(dotB)) {
           if (dotA === this.p1 && dotB === this.p2) {
@@ -103,7 +106,7 @@ export class CatchMe extends Game {
 
           if (dotA === this.p1 || dotA === this.p2) {
             this.dots.splice(j, 1);
-            var fragments = ExplodingDot.CreateFragments(dotB, 10);
+            var fragments = ExplodingDot.CreateFragments(dotB, 50);
             this.dotFragments = this.dotFragments.concat(fragments);
           }
         }
@@ -116,9 +119,6 @@ export class CatchMe extends Game {
     this.dots.forEach(dot => {
       dot.Draw(context);
     });
-
-    this.StepFragments();
-    this.DrawFragments(context);
   }
 
   private StepFragments() {
