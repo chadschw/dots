@@ -82,7 +82,7 @@ export class Dot {
         this.vy += this.gy;
     }
 
-    Collide(otherDot: Dot) {
+    Collide(otherDot: Dot): boolean {
         var dx = otherDot.x - this.x;
         var dy = otherDot.y - this.y;
         var distance = Math.sqrt(dx * dx + dy * dy);
@@ -104,7 +104,11 @@ export class Dot {
             this.vy *= this.friction * 0.9;
             otherDot.vx *= this.friction * 0.9;
             otherDot.vy *= this.friction * 0.9;
+
+          return true;
         }
+
+        return false;
     }
 
     Draw(context: CanvasRenderingContext2D) {

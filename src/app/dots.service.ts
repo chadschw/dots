@@ -4,8 +4,9 @@ import { Game } from './game/game';
 import { Collide } from './games/collide';
 import { Control } from './games/control';
 import { Gravity } from './games/gravity';
+import {CatchMe} from "./games/catch-me";
 
-@Injectable() 
+@Injectable()
 export class DotsService {
 
     Start(gameOptions: GameOptions, context: CanvasRenderingContext2D) {
@@ -27,6 +28,8 @@ export class DotsService {
             this.game = Control.Create(this.game.Options);
         } else if (name === 'gravity') {
             this.game = Gravity.Create(this.game.Options);
+        } else if (name === 'catch me') {
+          this.game = CatchMe.Create(this.game.Options);
         }
     }
 
@@ -44,7 +47,7 @@ export class DotsService {
 
     MouseDown(x: number, y: number) {
         this.game.Options.MouseDown(x, y);
-    } 
+    }
 
     MouseUp(x: number, y: number) {
         this.game.Options.MouseUp(x, y);

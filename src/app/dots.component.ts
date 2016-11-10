@@ -39,6 +39,7 @@ import { KeyCodes } from './game/key-codes';
             <a href=# (click)="onSetGame('spew')">Spew</a><br>
             <a href=# (click)="onSetGame('control')">Control</a> w,a,s,d to move<br>
             <a href=# (click)="onSetGame('gravity')">Gravity</a> w,a,s,d to move<br>
+            <a href=# (click)="onSetGame('catch me')">Catch Me</a> P1: wasd, P1 arrows<br>
         </div>
     `,
     providers: [
@@ -123,7 +124,7 @@ export class DotsComponent implements OnInit {
         this.CreateContext();
         this.dotsService.Start(this.CreateGameOptions(), this.context);
     }
-    
+
     private CreateCanvasElement() {
         this.canvasElement = <HTMLCanvasElement>document.getElementById("dots");
     }
